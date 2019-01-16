@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/CropImage/Uploads/Images
+/WebChamThi/App_Data/LOG_APP

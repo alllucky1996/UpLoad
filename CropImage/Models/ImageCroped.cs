@@ -32,6 +32,17 @@ namespace CropImage.Models
         {
             CreateDate = DateTime.Now;
         }
+        public string Info
+        {
+            get
+            {
+                string ok = IsOK == true ? "ok" : "err";
+                // gray
+                string Diem = X.ToString() + " " + Y.ToString();
+                string wh = Width.ToString() + " " + Height.ToString();
+                return ok + " " + "255" + " " + Diem + " " + wh + " " + "TL" + " " + Lable.Trim();
+            }
+        }
     }
    
 }

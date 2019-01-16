@@ -6,11 +6,16 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="không cần seo" name="description" />
     <meta content="name" name="Nguyễn Anh Dũng" />
-    <title>@ViewBag.Title </title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Crop/css")
-    @Styles.Render("~/css/metronic/datatable")
-    @Styles.Render("~/css/metronic/Upload")
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Theme/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+ 
     @RenderSection("Styles", required: false)
     @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
@@ -20,7 +25,7 @@
         <div class="page-header-inner ">
             <!-- BEGIN LOGO -->
             <div class="page-logo">
-                <a href="/">
+                <a href="index.html">
                     <img src="../assets/layouts/layout4/img/logo-light.png" alt="logo" class="logo-default">
                 </a>
                 <div class="menu-toggler sidebar-toggler">
@@ -109,7 +114,7 @@
         </div>
         <!-- END HEADER INNER -->
     </div>
-  
+
     <div class="page-container">
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
@@ -138,13 +143,8 @@
 
         </div>
     </div>
-
-
-
-
     <hr />
     <footer>
-
         <div class="page-footer">
             <div class="page-footer-inner">
                 &copy; @DateTime.Now.Year ; Nguyễn Anh Dũng
@@ -154,14 +154,9 @@
             </div>
         </div>
     </footer>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Crop/jquery")
-
-    @Scripts.Render("~/js/metronic/datatable")
-    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
-    @Scripts.Render("~/js/metronic/plupload")
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @Html.Partial("script")
     @RenderSection("scripts", required: false)
     @RenderSection("scripts2", required: false)
 

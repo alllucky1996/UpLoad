@@ -53,6 +53,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				throw;
 			}
 		}
+      
 		#endregion
 
 
@@ -65,14 +66,14 @@ namespace Web.Areas.FrontEnd.Controllers
 			ViewBag.CText = CText;
 			return View();
 		}
-		[Route("nhap" + CRoute, Name = CName + "_Create")]
-		public async Task<ActionResult> Create()
-		{
-			ViewBag.Title = "Thêm mới " + CText;
-			ViewBag.CName = CName;
-			ViewBag.CText = CText;
-			return View();
-		}
+		//[Route("nhap" + CRoute, Name = CName + "_Create")]
+		//public async Task<ActionResult> Create()
+		//{
+		//	ViewBag.Title = "Thêm mới " + CText;
+		//	ViewBag.CName = CName;
+		//	ViewBag.CText = CText;
+		//	return View();
+		//}
 		
 		#endregion
 		async Task<int> run(string fname)

@@ -6,17 +6,14 @@
 
 <div class="row margin-top-30">
     <div class="col-md-12">
-
         <div class="portlet light portlet-fit bordered ">
 
             <div class="portlet-body">
                 <div class="tabbable-line boxless margin-bottom-20">
                     <ul class="nav nav-tabs">
-
                         <li class="active">
                             <a href="#tab_2" data-toggle="tab"> Khoanh vùng trong hình ảnh </a>
                         </li>
-
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_2">
@@ -46,18 +43,16 @@
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="Detail_1">
                                                 @*<form id="CropCau" class="coords form-inline" onsubmit="return false;" action="#"></form>*@
-                                                @using (Html.BeginForm("CropCau", CName, FormMethod.Post, new { @class = "coords form-inline", @enctype = "multipart/form-data" }))
+                                                @using (Html.BeginForm("CropCau", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
                                                 {
                                                     @Html.AntiForgeryToken()
-                                                   // @Html.HiddenFor(model => model.ImageId)
-                                                   <input value="1" type="hidden" id="idImage", name="idImage" />
+                                                    <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                @*<input disabled type="text" class="form-control btn-sm x1" />*@
                                                                 @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1" })
                                                             </td>
                                                         </tr>
@@ -66,11 +61,9 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                @*<input disabled type="text" class="form-control btn-sm y1" />*@
                                                                 @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1" })
                                                             </td>
                                                         </tr>
-
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Độ rộng</label>
@@ -98,7 +91,7 @@
                                                         <tr>
                                                             <td>Mẫu đúng hay sai</td>
                                                             <td>
-                                                                <input type='checkbox' id='IsActived' name='IsActived' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
+                                                                <input type='checkbox' id='IsOK' name='IsOK' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
                                                                        class="make-switch" data-on-color="primary" data-off-color="danger" data-on-text="Đúng" data-off-text="Sai" />
                                                             </td>
                                                         </tr>
@@ -106,7 +99,7 @@
                                                     <div class="form-actions">
                                                         <div class="row">
                                                             <div class="col-md-offset-3 col-md-9">
-                                                                <button type="submit" class="btn green"><i class="fa fa-check"></i> Ghi nhận</button>
+                                                                <button type="submit" class="btn green "><i class="fa fa-check"></i> Ghi nhận</button>
                                                                 <a href="@Url.Action("Index")" class="btn default">Hủy bỏ</a>
                                                             </div>
                                                         </div>
@@ -114,14 +107,17 @@
                                                 }
                                             </div>
                                             <div class="tab-pane " id="Detail_2">
-                                                <form id="NhieuAmTiet" class=" form-inline" onsubmit="return false;" action="#">
+                                                @using (Html.BeginForm("CropNhieu", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm x1" />
+                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -129,16 +125,15 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm y1" />
+                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1" })
                                                             </td>
                                                         </tr>
-
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Độ rộng</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm w" />
+                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -146,7 +141,7 @@
                                                                 <label class="control-label">Độ cao</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm h" />
+                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -162,22 +157,34 @@
                                                                 <label class="control-label">Từ </label>
                                                             </td>
                                                             <td>
-                                                                <input type="text" id="Lable" name="Lable" class="form-control btn-sm " />
+                                                                @Html.TextBoxFor(model => model.Lable, new { @class = "form-control btn-sm lable" })
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Mẫu đúng hay sai</td>
                                                             <td>
-                                                                <input type='checkbox' id='IsActived' name='IsActived' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
+                                                                <input type='checkbox' id='IsOK' name='IsOK' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
                                                                        class="make-switch" data-on-color="primary" data-off-color="danger" data-on-text="Đúng" data-off-text="Sai" />
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </form>
+                                                    <div class="form-actions">
+                                                        <div class="row">
+                                                            <div class="col-md-offset-3 col-md-9">
+                                                                <button type="submit" class="btn green "><i class="fa fa-check"></i> Ghi nhận</button>
+                                                                <a href="@Url.Action("Index")" class="btn default">Hủy bỏ</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
 
                                             </div>
                                             <div class="tab-pane " id="Detail_3">
-                                                <form id="MotAmTiet" class=" form-inline" onsubmit="return false;" action="#">
+                                                @using (Html.BeginForm("CropOne", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <td>
@@ -225,28 +232,40 @@
                                                                 <label class="control-label">Âm tiết</label>
                                                             </td>
                                                             <td>
-                                                                <input type="text" id="Lable" name="Lable" class="form-control btn-sm " />
+                                                                @Html.TextBoxFor(model => model.Lable, new { @class = "form-control btn-sm lable" })
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Mẫu đúng hay sai</td>
                                                             <td>
-                                                                <input type='checkbox' id='IsActived' name='IsActived' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
+                                                                <input type='checkbox' id='IsOK' name='IsOK' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
                                                                        class="make-switch" data-on-color="primary" data-off-color="danger" data-on-text="Đúng" data-off-text="Sai" />
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </form>
+                                                    <div class="form-actions">
+                                                        <div class="row">
+                                                            <div class="col-md-offset-3 col-md-9">
+                                                                <button type="submit" class="btn green "><i class="fa fa-check"></i> Ghi nhận</button>
+                                                                <a href="@Url.Action("Index")" class="btn default">Hủy bỏ</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
                                             </div>
                                             <div class="tab-pane " id="Detail_4">
-                                                <form id="CropKyTu" class="coords form-inline" onsubmit="return false;" action="#">
+                                                @using (Html.BeginForm("CropChuOrDau", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm x1" />
+                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -254,16 +273,15 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm y1" />
+                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1" })
                                                             </td>
                                                         </tr>
-
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Độ rộng</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm w" />
+                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -271,7 +289,7 @@
                                                                 <label class="control-label">Độ cao</label>
                                                             </td>
                                                             <td>
-                                                                <input disabled type="text" class="form-control btn-sm h" />
+                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -286,12 +304,21 @@
                                                         <tr>
                                                             <td>Mẫu đúng hay sai</td>
                                                             <td>
-                                                                <input type='checkbox' id='IsActived' name='IsActived' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
+                                                                <input type='checkbox' id='IsOK' name='IsOK' value='true' @(Model == null || Model.IsOK == true ? "checked=checked" : null )
                                                                        class="make-switch" data-on-color="primary" data-off-color="danger" data-on-text="Đúng" data-off-text="Sai" />
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </form>
+                                                    <div class="form-actions">
+                                                        <div class="row">
+                                                            <div class="col-md-offset-3 col-md-9">
+                                                                <button type="submit" class="btn green "><i class="fa fa-check"></i> Ghi nhận</button>
+                                                                <a href="@Url.Action("Index")" class="btn default">Hủy bỏ</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
 
                                             </div>
                                         </div>
@@ -306,3 +333,36 @@
         </div>
     </div>
 </div>
+<script src="~/Scripts/Customer.js"></script>
+@section Scripts {
+    <script>
+
+        jQuery(document).ready(function () {
+
+            $(".Dcrop").submit(function (event) {
+                /* stop form from submitting normally */
+                event.preventDefault();
+                /* get the action attribute from the <form action=""> element */
+                var $form = $(this),
+                    url = $form.attr('action');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: $(this).serialize(),
+                    success: function (msg) {
+                        if (msg.Isok) {
+                            showNoty('Ghi nhận thành công', 'success');
+                        }
+                        showNoty('Đã sảy ra lỗi ' + msg.Message, 'Error');
+                    },
+                    error: function (data) {
+                        showNoty('Đã sảy ra lỗi trong quá trình xử lý', 'Error');
+                    },
+                    complete: function (result) {
+                        App.unblockUI();
+                    }
+                });
+            });
+        });
+    </script>
+}

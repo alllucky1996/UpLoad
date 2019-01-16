@@ -177,20 +177,20 @@
                                 {error: 'Empty file upload result'};
                         deferred = that._addFinishedDeferreds();
                         that._transition($(this)).done(
-                            function () {
-                                var node = $(this);
-                                template = that._renderDownload([file])
-                                    .replaceAll(node);
-                                that._forceReflow(template);
-                                that._transition(template).done(
-                                    function () {
-                                        data.context = $(this);
-                                        that._trigger('completed', e, data);
-                                        that._trigger('finished', e, data);
-                                        deferred.resolve();
-                                    }
-                                );
-                            }
+                            //function () {
+                            //    var node = $(this);
+                            //    template = that._renderDownload([file])
+                            //        .replaceAll(node);
+                            //    that._forceReflow(template);
+                            //    that._transition(template).done(
+                            //        function () {
+                            //            data.context = $(this);
+                            //            that._trigger('completed', e, data);
+                            //            that._trigger('finished', e, data);
+                            //            deferred.resolve();
+                            //        }
+                            //    );
+                            //}
                         );
                     });
                 } else {

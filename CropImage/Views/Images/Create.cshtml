@@ -1,27 +1,18 @@
-﻿@model Dung.Model.CheckImage
+﻿@model CropImage.Models.Image
+
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Areas/FrontEnd/Views/Shared/_PublicLayout.cshtml";
-    if (ViewBag.ActiveTabNum == null)
-    {
-        ViewBag.ActiveTabNum = "1";
-    }
-    string CName = ViewBag.CName == null ? "Image" : ViewBag.CName;
-    string indexRoute = "";
-    int CurrentPage = ViewBag.CurrentPage == null ? 0 : (int)ViewBag.CurrentPage;
-    int PageSize = ViewBag.PageSize == null ? 0 : (int)ViewBag.PageSize;
-    string SearchText = ViewBag.SearchText == null ? "" : ViewBag.SearchText;
-    indexRoute = Url.RouteUrl("FrontEnd_Home_Index");
-    string url1 = indexRoute;
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
+
 <ul class="page-breadcrumb breadcrumb">
     <li>
         <i class="fa fa-home"></i>
-        <a href="@Url.RouteUrl("FrontEnd_Home_Index")" ">Trang chủ</a>
+        <a href="#">Trang chủ</a>
         <i class="fa fa-angle-right"></i>
     </li>
     <li>
-        <a href="@indexRoute">Danh sách @ViewBag.CText</a>
+        <a href="#">Danh sách @ViewBag.CText</a>
         <i class="fa fa-angle-right"></i>
     </li>
     <li class="active">
@@ -41,7 +32,7 @@
         <div class="">
 
             <div class="row">
-                @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @class = "form -horizontal form-bordered form-row-stripped", @id = "fileupload", @enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Create", "Images", FormMethod.Post, new { @class = "form -horizontal form-bordered form-row-stripped dUpload", @id = "fileupload", @enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="col-md-12">
@@ -59,7 +50,7 @@
                                     <span class="btn green fileinput-button">
                                         <i class="fa fa-plus"></i>
                                         <span> Add files... </span>
-                                        <input type="file" name="file" multiple="" id="file">
+                                        <input type="file" name="fileS" id="fileS" multiple="multiple">
                                     </span>
                                     <button type="submit" class="btn blue start">
                                         <i class="fa fa-upload"></i>
@@ -95,18 +86,13 @@
                 {% for (var i=0, file; file=o.files[i]; i++) { %}
                 <tr class="template-upload fade">
                     <td>
-                        @*<input name="IsChecked" id="IsChecked" type="checkbox" class="toggle">*@
-                        <input type='checkbox' id='IsChecked' name='IsChecked' value='true' @(Model == null || Model.IsChecked == true ? "checked=checked" : "" )
-                               class="make-switch" />
-                    </td>
-                    <td>
                         <span class="preview"></span>
                     </td>
                     <td>
-                        <p class="name font-red">{%=file.name%}</p>
+                        <p class="name font-blue">{%=file.name%}</p>
                         @*<input id="Name" name="Name" style="Display:none" type="text" value={%=file.name%}>*@
-                        @Html.LabelFor(o => o.Name)
-                        @Html.TextBoxFor(o => o.Name)
+                        @*@Html.LabelFor(o => o.Name)
+                        @Html.TextBoxFor(o => o.Name)*@
                         <strong class="error label label-danger"></strong>
                     </td>
                     <td>
@@ -133,41 +119,103 @@
                 {% for (var i=0, file; file=o.files[i]; i++) { %}
                 <tr class="template-download fade">
                     @*<td>
-                            <span class="preview">
-                                {% if (file.thumbnailUrl) { %}
-                                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery>
-                                    <img src="{%=file.thumbnailUrl%}">
-                                </a> {% } %}
-                            </span>
-                        </td>
-                        <td>
-                            <p class="name">
-                                {% if (file.url) { %}
-                                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl? 'data-gallery' : '' %}>{%=file.name%}</a> {% } else { %}
-                                <span>{%=file.name%}</span> {% } %}
-                            </p> {% if (file.error) { %}
-                            <div>
-                                <span class="label label-danger">Error</span> {%=file.error%}
-                            </div> {% } %}
-                        </td>
-                        <td>
-                            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-                        </td>
-                        <td>
-                            {% if (file.deleteUrl) { %}
-                            <button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
-                                <i class="fa fa-trash-o"></i>
-                                <span>Delete</span>
-                            </button>
-                            <input type="checkbox" name="delete" value="1" class="toggle"> {% } else { %}
-                            <button class="btn yellow cancel btn-sm">
-                                <i class="fa fa-ban"></i>
-                                <span>Cancel</span>
-                            </button> {% } %}
-                        </td>*@
+                    <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery>
+                            <img src="{%=file.thumbnailUrl%}">
+                        </a> {% } %}
+                    </span>
+                </td>
+                <td>
+                    <p class="name">
+                        {% if (file.url) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl? 'data-gallery' : '' %}>{%=file.name%}</a> {% } else { %}
+                        <span>{%=file.name%}</span> {% } %}
+                    </p> {% if (file.error) { %}
+                    <div>
+                        <span class="label label-danger">Error</span> {%=file.error%}
+                    </div> {% } %}
+                </td>
+                <td>
+                    <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <td>
+                    {% if (file.deleteUrl) { %}
+                    <button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
+                        <i class="fa fa-trash-o"></i>
+                        <span>Delete</span>
+                    </button>
+                    <input type="checkbox" name="delete" value="1" class="toggle"> {% } else { %}
+                    <button class="btn yellow cancel btn-sm">
+                        <i class="fa fa-ban"></i>
+                        <span>Cancel</span>
+                    </button> {% } %}
+                </td>*@
                 </tr> {% } %}
             </script>
             <!-- END PAGE BASE CONTENT -->
         </div>
     </div>
+    <script src="~/Scripts/Customer.js"></script>
 </div>
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            
+            $("#fileupload").submit(function (event) {
+                /* stop form from submitting normally */
+                event.preventDefault();
+                /* get the action attribute from the <form action=""> element */
+                var $form = $(this);
+                   var url = $form.attr('action');
+                $.ajax({
+                    type: 'POST',
+                    url: $('#fileupload').attr("action"),
+                    data: $(this).serialize(),
+                    success: function (msg) {
+                        if (msg.Isok) {
+                            showNoty('Upload thành công', 'success');
+                            //$('.files').remove();
+                            //location.href = "/Images";
+                        }
+                        showNoty('Đã sảy ra lỗi ' + msg.Message, 'Error');
+                    },
+                    error: function (data) {
+                        showNoty('Đã sảy ra lỗi trong quá trình xử lý', 'Error');
+                    },
+                    complete: function (result) {
+                        App.unblockUI();
+                    }
+                });
+            });
+
+            //$(".start").click(function (event) {
+            //    /* stop form from submitting normally */
+            //    event.preventDefault();
+            //    /* get the action attribute from the <form action=""> element */
+            //    var $form = $(this);
+            //       var url = $form.attr('action');
+            //    $.ajax({
+            //        type: 'POST',
+            //        url: url,
+            //        data: $(this).serialize(),
+            //        success: function (msg) {
+            //            if (msg.Isok) {
+            //                showNoty('Upload thành công', 'success');
+            //                $('.files').remove();
+            //                location.href = "/Images";
+            //            }
+            //            showNoty('Đã sảy ra lỗi ' + msg.Message, 'Error');
+            //        },
+            //        error: function (data) {
+            //            showNoty('Đã sảy ra lỗi trong quá trình xử lý', 'Error');
+            //        },
+            //        complete: function (result) {
+            //            App.unblockUI();
+            //        }
+            //    });
+            //});
+         
+        });
+    </script>
+}

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CropImage.Commons
@@ -88,10 +89,28 @@ namespace CropImage.Commons
                 sw.Write(text);
             }
         }
+        public static void CreateFileLn(string filePath, string text)
+        {
+            using (StreamWriter sw = (File.Exists(filePath)) ? File.CreateText(filePath) : File.CreateText(filePath))
+            {
+                sw.WriteLine(text);
+            }
+        }
+        public static async void CreateFileLnAsync(string filePath, string text)
+        {
+            using (StreamWriter sw = (File.Exists(filePath)) ? File.CreateText(filePath) : File.CreateText(filePath))
+            {
+               await  sw.WriteLineAsync(text);
+            }
+        }
 
         public static void CoppyFile(string Source, string Taget)
         {
             System.IO.File.Copy(Source, Taget);
+        }
+        public static void AppenAllText(string path, string data)
+        {
+            File.AppendAllText(path, data);
         }
     }
 }

@@ -154,10 +154,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
+    <Compile Include="Commons\FileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\GhiFileTraining.cs" />
+    <Compile Include="Handler\GrayLever.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\Training.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LoaiTu.cs" />
     <Compile Include="Models\Dau.cs" />
+    <Compile Include="Models\ViewModels\CropInfo.cs" />
     <Compile Include="Models\ViewModels\ExecuteResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -184,6 +189,7 @@
     </Content>
     <Content Include="Areas\Management\Views\web.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Customer.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -5918,6 +5924,18 @@
     <Content Include="Theme\assets\pages\media\pages\Thumbs.db" />
     <Content Include="Views\Shared\_Css1.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\123Images\Create.cshtml" />
+    <Content Include="Views\123Images\Index.cshtml" />
+    <Content Include="Views\123Images\Search.cshtml" />
+    <Content Include="Views\123Images\Update.cshtml" />
+    <Content Include="Views\Images\Create.cshtml" />
+    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\Details.cshtml" />
+    <Content Include="Views\Images\Edit.cshtml" />
+    <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Shared\script.cshtml" />
+    <Content Include="Views\Images\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5926,6 +5944,7 @@
     <Folder Include="Areas\Management\Views\Shared\" />
     <Folder Include="Theme\assets\apps\img\" />
     <Folder Include="Theme\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
+    <Folder Include="TrainingFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -5939,6 +5958,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{F3EDEF19-EC3C-4029-8F19-BD39C89DBF0F}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
