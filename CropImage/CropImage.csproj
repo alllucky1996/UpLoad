@@ -5936,6 +5936,9 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Shared\script.cshtml" />
     <Content Include="Views\Images\Table.cshtml" />
+    <Content Include="Views\Home\Next2.cshtml" />
+    <Content Include="Views\Home\Next.cshtml" />
+    <Content Include="Views\Home\Pre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

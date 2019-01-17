@@ -26,7 +26,67 @@ namespace CropImage.Controllers
             #endregion
             return View();
         }
-       
+        public async Task<ActionResult> Pre(long id)
+        {
+            Image img = null;
+            string error="";
+            if(id >1)
+            {
+                img = await db.Images.FindAsync(id - 1);
+                while (img == null)
+                {
+                    id--;
+                    img = await db.Images.FindAsync(id);
+                }
+            }
+            else
+            {
+                img = await db.Images.FindAsync(id);
+                error = "Không có ảnh trước đó";
+            }
+            ViewBag.Error = error;
+            ViewBag.Image = img.Uri;
+            ViewBag.idImage = img.Id;
+            #region drop
+            var listDau = db.Daus;
+            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            var listLoaiTu = db.LoaiTus;
+            ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            #endregion
+            return View();
+            // return Json(new ExecuteResult() { Isok = true, Data = img}, JsonRequestBehavior.AllowGet);
+        }
+        public async Task<ActionResult> Next(long id)
+        {
+            var lastImg = db.Images.OrderByDescending(u => u.Id).FirstOrDefault();
+            string error = "";
+            Image img;
+            if (id < lastImg.Id) {
+                img = await db.Images.FindAsync(id + 1);
+                while (img == null)
+                {
+                    id++;
+                    img = await db.Images.FindAsync(id);
+                }
+               
+            }
+            else
+            {
+                img = lastImg;
+                error = "Không còn ảnh tiếp theo";
+            }
+            ViewBag.Error = error;
+            ViewBag.Image = img.Uri;
+            ViewBag.idImage = img.Id;
+            #region drop
+            var listDau = db.Daus;
+            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            var listLoaiTu = db.LoaiTus;
+            ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            #endregion
+            return View();
+            // return Json(new ExecuteResult() { Isok = true, Data = img}, JsonRequestBehavior.AllowGet);
+        }
 
         public async Task<ActionResult> CropCau(ImageCroped model, long idImage)
         {

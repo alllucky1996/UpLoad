@@ -42,7 +42,7 @@
                                                 <a href="#Detail_1" data-toggle="tab"> Mức câu </a>
                                             </li>
                                             <li>
-                                                <a href="#Detail_2" data-toggle="tab"> Mức từ </a>
+                                                <a href="#Detail_2" data-toggle="tab"> Mức từ nhiều âm tiết </a>
                                             </li>
                                             <li>
                                                 <a href="#Detail_3" data-toggle="tab"> Mức âm tiết </a>
@@ -64,7 +64,7 @@
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1", disabled="true" })
+                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -72,7 +72,7 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -80,7 +80,7 @@
                                                                 <label class="control-label">Độ rộng</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -88,7 +88,7 @@
                                                                 <label class="control-label">Độ cao</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -118,7 +118,7 @@
                                                 }
                                             </div>
                                             <div class="tab-pane " id="Detail_2">
-                                                @using (Html.BeginForm("CropTu", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
+                                                @using (Html.BeginForm("CropNhieu", CName, FormMethod.Post, new { @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
                                                 {
                                                     @Html.AntiForgeryToken()
                                                     <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
@@ -128,7 +128,7 @@
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -136,7 +136,7 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -144,7 +144,7 @@
                                                                 <label class="control-label">Độ rộng</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -152,15 +152,15 @@
                                                                 <label class="control-label">Độ cao</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h", disabled = "true" })
+                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h" })
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <label class="control-label">Từ loại</label>
+                                                                <label class="control-label">Loại từ</label>
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownList("LoaiTu", null, "---Chọn từ loại---", new { @class = "form-control" })
+                                                                @Html.DropDownList("LoaiTu", null, "---Chọn loại từ---", new { @class = "form-control" })
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -202,7 +202,7 @@
                                                                 <label class="control-label">Góc trái X</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.X, new { @class = "form-control btn-sm x1", disabled = "true" })
+                                                                <input disabled type="text" class="form-control btn-sm x1" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -210,15 +210,16 @@
                                                                 <label class="control-label">Góc trái Y</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Y, new { @class = "form-control btn-sm y1", disabled = "true" })
+                                                                <input disabled type="text" class="form-control btn-sm y1" />
                                                             </td>
                                                         </tr>
+
                                                         <tr>
                                                             <td>
                                                                 <label class="control-label">Độ rộng</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Width, new { @class = "form-control btn-sm w", disabled = "true" })
+                                                                <input disabled type="text" class="form-control btn-sm w" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -226,7 +227,7 @@
                                                                 <label class="control-label">Độ cao</label>
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(model => model.Height, new { @class = "form-control btn-sm h", disabled = "true" })
+                                                                <input disabled type="text" class="form-control btn-sm h" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -350,7 +351,7 @@
 
         jQuery(document).ready(function () {
             $('#Left').click(function () {
-                // -- 
+                // --
                 var $id = $('#demo2').attr('data-object-id');
                 var url = '/Home/Pre?id=' + $id;
                 location.href = url;
@@ -358,7 +359,7 @@
             $('#Right').click(function () {
                 // ++
                 var $id = $('#demo2').attr('data-object-id');
-               var url= '/Home/Next?id=' + $id;
+                var url = '/Home/Next?id=' + $id;
                 location.href = url;
             });
             $(".Dcrop").submit(function (event) {
