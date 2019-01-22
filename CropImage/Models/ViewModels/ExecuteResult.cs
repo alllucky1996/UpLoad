@@ -10,5 +10,6 @@ namespace CropImage.Models.ViewModels
         public bool Isok { get; set; }
         public object Data { get; set; }
         public string Message { get; set; }
+        public string PreVeiwImage { get; set; }
     }
 }

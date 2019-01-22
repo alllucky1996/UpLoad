@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 /CropImage/Uploads/Images
 /WebChamThi/App_Data/LOG_APP
+/CropImage/TrainingFile
+/CropImage/TempImage

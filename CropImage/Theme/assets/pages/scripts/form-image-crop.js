@@ -189,7 +189,7 @@ var FormImageCrop = function () {
           $('#bgc_buttons .btn-group').append(
             create_btn(i).css({
               background: bgc[i],
-              color: ((i == 'K') || (i == 'R'))?'white':'black'
+              color: ((i === 'K') || (i === 'R'))?'white':'black'
             }).click(setoptHandler('bgColor',bgc[i])), ' '
           );
         }

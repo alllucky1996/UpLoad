@@ -1,6 +1,10 @@
-﻿using CropImage.Commons;
+﻿using Common.Helpers;
+using CropImage.Commons;
+using CropImage.Handler.Crop;
 using CropImage.Models;
 using CropImage.Models.ViewModels;
+using Emgu.CV;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,10 +18,31 @@ namespace CropImage.Controllers
     public class HomeController : Controller
     {
         private DataContext db = new DataContext();
-        public ActionResult Index()
+        private string PreViewImage = "~/TempImage/";
+       public int widthImage { get; set; }
+        public int heightImage { get; set; }
+        #region get 
+        void baseView()
         {
             ViewBag.Image = "/Uploads/Images/Mau1.jpg";
             ViewBag.idImage = 1;
+            int h;
+            ViewBag.widthImage = CropHelper.WidthImage(Server.MapPath("~/Uploads/Images/Mau1.jpg"),out h);
+            ViewBag.heightImage = h;
+            ViewBag.PreViewImage = "/TempImage/tempImages.jpg";
+        }
+        void baseView(Image img)
+        {
+            ViewBag.Image = img.Uri;
+            ViewBag.idImage =img.Id;
+            int h;
+            ViewBag.widthImage = CropHelper.WidthImage(Server.MapPath("~"+ img.Uri), out h);
+            ViewBag.heightImage = h;
+        }
+        
+        public ActionResult Index()
+        {
+            baseView();
             #region drop
             var listDau = db.Daus;
             ViewBag.Dau = new SelectList(listDau, "Code", "Name");
@@ -29,8 +54,8 @@ namespace CropImage.Controllers
         public async Task<ActionResult> Pre(long id)
         {
             Image img = null;
-            string error="";
-            if(id >1)
+            string error = "";
+            if (id > 1)
             {
                 img = await db.Images.FindAsync(id - 1);
                 while (img == null)
@@ -45,8 +70,7 @@ namespace CropImage.Controllers
                 error = "Không có ảnh trước đó";
             }
             ViewBag.Error = error;
-            ViewBag.Image = img.Uri;
-            ViewBag.idImage = img.Id;
+            baseView(img);
             #region drop
             var listDau = db.Daus;
             ViewBag.Dau = new SelectList(listDau, "Code", "Name");
@@ -61,14 +85,15 @@ namespace CropImage.Controllers
             var lastImg = db.Images.OrderByDescending(u => u.Id).FirstOrDefault();
             string error = "";
             Image img;
-            if (id < lastImg.Id) {
+            if (id < lastImg.Id)
+            {
                 img = await db.Images.FindAsync(id + 1);
                 while (img == null)
                 {
                     id++;
                     img = await db.Images.FindAsync(id);
                 }
-               
+
             }
             else
             {
@@ -76,31 +101,87 @@ namespace CropImage.Controllers
                 error = "Không còn ảnh tiếp theo";
             }
             ViewBag.Error = error;
-            ViewBag.Image = img.Uri;
-            ViewBag.idImage = img.Id;
+            baseView(img);
+            //#region drop
+            //var listDau = db.Daus;
+            //ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            //var listLoaiTu = db.LoaiTus;
+            //ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            //#endregion
+            return View();
+           // return Json(new { Isok = true, Data = img.Uri, objectId=img.Id}, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Cau()
+        {
+          //  baseView();
+            return PartialView();
+        }
+        public ActionResult Tu()
+        {
+           // baseView();
             #region drop
             var listDau = db.Daus;
             ViewBag.Dau = new SelectList(listDau, "Code", "Name");
             var listLoaiTu = db.LoaiTus;
             ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
             #endregion
-            return View();
-            // return Json(new ExecuteResult() { Isok = true, Data = img}, JsonRequestBehavior.AllowGet);
+            return PartialView();
         }
-
+        public ActionResult AmTiet()
+        {
+          //  baseView();
+            #region drop
+            var listDau = db.Daus;
+            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            var listTuLoai = db.LoaiTus;
+            ViewBag.TuLoai = new SelectList(listTuLoai, "Code", "Name");
+            #endregion
+            return PartialView();
+        }
+        public ActionResult Chu()
+        {
+           // baseView();
+            #region drop
+            var listDau = db.Daus;
+            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            #endregion
+            return PartialView();
+        }
+        #endregion
+        #region post
+        [HttpPost]
         public async Task<ActionResult> CropCau(ImageCroped model, long idImage)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                  if(model.X==model.Y&& model.Width== model.Height&& model.Height== 0&& model.Y==0) Json(new ExecuteResult() { Isok = false, Data = null, Message = "Crop k hợp lệ" });
+                    if (model.X == model.Y && model.Width == model.Height && model.Height == 0 && model.Y == 0) Json(new ExecuteResult() { Isok = false, Data = null, Message = "Crop k hợp lệ" });
                     var croped = new ImageCroped();
                     croped = model;
                     croped.ImageId = idImage;
                     db.ImageCropeds.Add(croped);
                     await db.SaveChangesAsync();
-                    return Json( new ExecuteResult() { Isok = true, Data = 1, Message = "Saved" });
+                    // cắt hình && show
+                    var img = db.Images.Find(idImage);
+                    if (img != null)
+                    {
+                        string pat = FileHelper.GetRunningPath();
+                        string ax = Server.MapPath("~/"+ img.Uri);
+                        //string pathImage = ax + img.Uri.Replace("/","\\");
+                        var rootImage = new Image<Bgr, byte>(ax);
+                        // get Id insered 
+                        db.Entry(croped).GetDatabaseValues();
+                        long i = croped.Id;
+                        PreViewImage = PreViewImage+ idImage+"_"+i+"_"+ DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") + ".jpg";
+                        var ok = CropHelper.Save(CropHelper.Crop(rootImage, model.X, model.Y, model.Width, model.Height), Server.MapPath(PreViewImage));
+                        if (!ok)
+                        {
+                            return Json(new ExecuteResult() { Isok = false, Data = PreViewImage.Replace("~", ""), Message = "Lưu đươc vào db nhưng lỗi trong quá trình xử lý ảnh", PreVeiwImage = PreViewImage.Replace("~", "")});
+                        }
+                    }
+
+                    return Json(new ExecuteResult() { Isok = true, Data = PreViewImage.Replace("~", "") , Message = "Saved", PreVeiwImage = PreViewImage.Replace("~","") });
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +191,47 @@ namespace CropImage.Controllers
             return Json(new ExecuteResult() { Isok = false, Data = null, Message = "Hãy nhập đủ thông tin" });
 
         }
+        [HttpPost]
+        public async Task<ActionResult> CropTu(ImageCroped model, long idImage)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (model.X == model.Y && model.Width == model.Height && model.Height == 0 && model.Y == 0) Json(new ExecuteResult() { Isok = false, Data = null, Message = "Crop k hợp lệ" });
+                    var croped = new ImageCroped();
+                    croped = model;
+                    croped.ImageId = idImage;
+                    db.ImageCropeds.Add(croped);
+                    await db.SaveChangesAsync();
+                    // cắt hình && show
+                    var img = db.Images.Find(idImage);
+                    if (img != null)
+                    {
+                        string pat = FileHelper.GetRunningPath();
+                        string ax = Server.MapPath("~/" + img.Uri);
+                        //string pathImage = ax + img.Uri.Replace("/","\\");
+                        var rootImage = new Image<Bgr, byte>(ax);
+                        var ok = CropHelper.Save(CropHelper.Crop(rootImage, model.X, model.Y, model.Width, model.Height), Server.MapPath(PreViewImage));
+                        if (!ok)
+                        {
+                            // thì không ok thôi 
+                            // dã lưu vào db nhưng sảy ra lỗi trong quá trình cắt ảnh 
+                            return Json(new ExecuteResult() { Isok = false, Data = 1, Message = "Lưu đươc vào db nhưng lỗi trong quá trình xử lý ảnh", PreVeiwImage = "" });
+                        }
+                    }
+
+                    return Json(new ExecuteResult() { Isok = true, Data = 1, Message = "Saved", PreVeiwImage = PreViewImage });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new ExecuteResult() { Isok = false, Data = null, Message = ex.Message });
+                }
+            }
+            return Json(new ExecuteResult() { Isok = false, Data = null, Message = "Hãy nhập đủ thông tin" });
+
+        }
+
         public async Task<ActionResult> CropOne(ImageCroped model, long idImage)
         {
             if (ModelState.IsValid)
@@ -131,9 +253,16 @@ namespace CropImage.Controllers
             return Json(new ExecuteResult() { Isok = false, Data = null, Message = "Hãy nhập đủ thông tin" });
 
         }
+        #endregion
+
+
+
+
+
+
 
         // ghi từ db vào file nhãn 
-        public  ActionResult WriteFile(long accountId)
+        public ActionResult WriteFile(long accountId)
         {
             //format: a01-000u-00-00| ok| 154| 408 768 27 51| AT| A
             try

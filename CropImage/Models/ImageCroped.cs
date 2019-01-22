@@ -17,14 +17,20 @@ namespace CropImage.Models
         public string code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        [Display(Name ="Góc trái X")]
         public int X { get; set; }
+        [Display(Name = "Góc trái y")]
         public int Y { get; set; }
+        [Display(Name = "Độ rộng")]
         public int Width { get; set; }
+        [Display(Name = "Chiều cao")]
         public int Height { get; set; }
         public string LoaiTu { get; set; }
+       
         [Required(ErrorMessage = "Không được để trống")]
         public string Lable { get; set; }
         public bool? IsDauCau { get; set; }
+        [Display(Name = "Mẫu này đúng hay sai")]
         public bool IsOK { get; set; }
         public DateTime CreateDate { get; set; }
 

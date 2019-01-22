@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="không cần seo" name="description" />
+    <meta content="name" name="Nguyễn Anh Dũng" />
+    <title>@ViewBag.Title </title>
+    <link href="~/Theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Crop/css")
+    @*@Styles.Render("~/css/metronic/datatable")
+    @Styles.Render("~/css/metronic/Upload")*@
+    @RenderSection("Styles", required: false)
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
+   
+            @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Crop/jquery")
+    @Scripts.Render("~/toast/js")
+    @*@Scripts.Render("~/js/metronic/datatable")
+    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
+    @Scripts.Render("~/js/metronic/plupload")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+    @RenderSection("scripts2", required: false)
+</body>
+</html>

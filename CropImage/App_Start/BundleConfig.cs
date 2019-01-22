@@ -39,9 +39,11 @@ namespace CropImage
                         "~/Theme/assets/layouts/layout4/scripts/layout.min.js",
                         "~/Theme/assets/layouts/layout4/scripts/demo.min.js",
                         "~/Theme/assets/layouts/global/scripts/quick-sidebar.min.js",
-                        "~/Theme/assets/layouts/global/scripts/quick-nav.min.js",
-                        "~/Theme/assets/global/plugins/bootstrap-toastr/toastr.min.js"
+                        "~/Theme/assets/layouts/global/scripts/quick-nav.min.js"
                         ));
+            bundles.Add(new ScriptBundle("~/toast/js").Include(
+                        "~/Theme/assets/global/plugins/bootstrap-toastr/toastr.min.js",
+                        "~/Theme/assets/pages/scripts/ui-toastr.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -68,7 +70,7 @@ namespace CropImage
                       "~/Theme/assets/global/plugins/bootstrap-toastr/toastr.min.css"
                       ));
             // cuttom
-           // crop image
+            // crop image
             bundles.Add(new StyleBundle("~/Crop/css").Include("" +
                 "~/Theme/assets/global/plugins/jcrop/css/jquery.Jcrop.min.css",
                 "~/Themes/assets/global/plugins/fancybox/source/jquery.fancybox.css",
@@ -80,20 +82,20 @@ namespace CropImage
                 "~/Theme/assets/global/plugins/jcrop/js/jquery.Jcrop.min.js",
                 "~/Theme/assets/pages/scripts/form-image-crop.js",
                   "~/Theme/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/load-image.min.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/blueimp-gallery/jquery.blueimp-gallery.min.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-process.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-image.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-audio.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-video.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-validate.js",
-         "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"
-         //,"~/Theme/assets/pages/scripts/form-fileupload.js"
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/load-image.min.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/blueimp-gallery/jquery.blueimp-gallery.min.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-process.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-image.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-audio.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-video.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-validate.js",
+                 "~/Theme/assets/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"
+                //,"~/Theme/assets/pages/scripts/form-fileupload.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/js/metronic/ie").Include(
@@ -193,7 +195,7 @@ namespace CropImage
             bundles.Add(new ScriptBundle("~/js/metronic/jstree").Include("~/Themes/metronic/assets/global/plugins/jstree/dist/jstree.min.js"));
 
             bundles.Add(new ScriptBundle("~/js/metronic/validate").Include("~/Themes/metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"));
-            
+
 
             bundles.Add(new ScriptBundle("~/js/metronic/bootstrap-fileinput").Include("~/Themes/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"));
 
