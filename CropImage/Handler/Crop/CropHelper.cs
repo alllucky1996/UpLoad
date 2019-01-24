@@ -23,6 +23,12 @@ namespace CropImage.Handler.Crop
         //}
         public static int WidthImage(string uri, out int Height )
         {
+           var any= System.IO.Directory.Exists(uri);
+            if (!any)
+            {
+                Height = 0;
+                return 0;
+            }
             var temp = new Image<Gray, byte>(uri);
             Height = temp.Height;
             return temp.Width;

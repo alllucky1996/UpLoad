@@ -70,20 +70,22 @@ namespace CropImage.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
                         Guid idImage = Guid.NewGuid();
-                        string fileName = string.Format("{0}_{1}{2}", String.Format("{0:dd_MM_yyyy_hh_mm_ss_fff}", DateTime.Now), idImage.ToString(), Path.GetExtension(file.FileName));
+                        string fileName = string.Format("{0}{1}", idImage.ToString().Replace("-", ""), Path.GetExtension(file.FileName));
+
                         var path = Path.Combine(filePath, fileName);
                         file.SaveAs(path);
                         fullFilePath = fullFilePath + fileName;
 
                         var item = new Image();
                         item.code = "";// ghi gile theo cấu trúc
-                        item.Name = "";// ghi gile theo cấu trúc
+                        item.Name = fileName;// ghi gile theo cấu trúc
                         item.Description = file.FileName;
                         item.TrangThai = 0;
                         item.Uri = fullFilePath;
 
                         db.Images.Add(item);
                         await db.SaveChangesAsync();
+
                         return Json(new ExecuteResult() { Isok = true });
                     }
                     return Json(new ExecuteResult() { Isok = false });

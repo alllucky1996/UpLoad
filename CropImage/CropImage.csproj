@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Commons\FileHelper.cs" />
+    <Compile Include="Commons\StringHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -176,6 +177,7 @@
     <Compile Include="Handler\GhiFileTraining.cs" />
     <Compile Include="Handler\GrayLever.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\Keys.cs" />
     <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\Training.cs" />
     <Compile Include="Models\ImageCroped.cs" />
@@ -214,6 +216,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Theme\150_150.png" />
     <Content Include="Theme\assets\apps\css\inbox.css" />
     <Content Include="Theme\assets\apps\css\inbox.min.css" />
     <Content Include="Theme\assets\apps\css\ticket.css" />
@@ -5574,7 +5577,9 @@
     <Content Include="Theme\assets\pages\scripts\widgets.js" />
     <Content Include="Theme\assets\pages\scripts\widgets.min.js" />
     <Content Include="Uploads\Images\Mau1.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

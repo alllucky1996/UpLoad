@@ -3,9 +3,9 @@
     ViewBag.Title = "Cau";
     string CName = ViewBag.CName == null ? "Home" : ViewBag.CName;
 
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = null;// "~/Views/Shared/_Layout3.cshtml";
 }
-@using (Html.BeginForm("CropChuOrDau", "Home", FormMethod.Post, new { id = "formDetail", @class = "coords form-inline Dcrop", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CropChuOrDau", "Home", FormMethod.Post, new { id = "formDetail", @class = "coords form-inline Dcrop", @enctype = "multipart/form-data", @alt = "MucChu" }))
 {
     @Html.AntiForgeryToken()
     <input value="@ViewBag.idImage" type="hidden" id="idImage" , name="idImage" />
@@ -15,7 +15,7 @@
                 <label class="control-label">Góc trái X</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.X, new { @class = "form-control  x1" })
+                @Html.TextBoxFor(model => model.X, new { @class = "form-control  x1", @style = "width: 100%;" })
             </td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 <label class="control-label">Góc trái Y</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Y, new { @class = "form-control  y1" })
+                @Html.TextBoxFor(model => model.Y, new { @class = "form-control  y1", @style = "width: 100%;" })
             </td>
         </tr>
         <tr>
@@ -31,7 +31,7 @@
                 <label class="control-label">Độ rộng</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Width, new { @class = "form-control   w" })
+                @Html.TextBoxFor(model => model.Width, new { @class = "form-control w", @style = "width: 100%;" })
             </td>
         </tr>
         <tr>
@@ -39,7 +39,7 @@
                 <label class="control-label">Độ cao</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Height, new { @class = "form-control  h" })
+                @Html.TextBoxFor(model => model.Height, new { @class = "form-control  h", @style = "width: 100%;" })
             </td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
             </td>
             <td>
                 @*<input type="text" id="Lable" name="Lable" class="form-control btn-sm" />*@
-                @Html.DropDownList("Dau", null, "---Chọn dấu---", new { @class = "form-control" })
+                @Html.DropDownList("Dau", null, "---Chọn dấu---", new { @class = "form-control", @style = "width: 100%;" })
             </td>
         </tr>
         <tr>

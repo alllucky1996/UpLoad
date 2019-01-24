@@ -60,6 +60,7 @@
                                         <i class="fa fa-ban-circle"></i>
                                         <span> Cancel upload </span>
                                     </button>
+                                    <a href="/Images" class="btn default">Quay về danh sách</a>
                                     <span class="fileupload-process"> </span>
                                 </div>
                                 <!-- The global progress information -->
@@ -189,32 +190,7 @@
                 });
             });
 
-            //$(".start").click(function (event) {
-            //    /* stop form from submitting normally */
-            //    event.preventDefault();
-            //    /* get the action attribute from the <form action=""> element */
-            //    var $form = $(this);
-            //       var url = $form.attr('action');
-            //    $.ajax({
-            //        type: 'POST',
-            //        url: url,
-            //        data: $(this).serialize(),
-            //        success: function (msg) {
-            //            if (msg.Isok) {
-            //                showNoty('Upload thành công', 'success');
-            //                $('.files').remove();
-            //                location.href = "/Images";
-            //            }
-            //            showNoty('Đã sảy ra lỗi ' + msg.Message, 'Error');
-            //        },
-            //        error: function (data) {
-            //            showNoty('Đã sảy ra lỗi trong quá trình xử lý', 'Error');
-            //        },
-            //        complete: function (result) {
-            //            App.unblockUI();
-            //        }
-            //    });
-            //});
+           
          
         });
     </script>

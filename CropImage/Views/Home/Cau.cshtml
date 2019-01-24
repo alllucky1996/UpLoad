@@ -3,10 +3,10 @@
     ViewBag.Title = "Cau";
     string CName = ViewBag.CName == null ? "Home" : ViewBag.CName;
 
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = null;// "~/Views/Shared/_Layout3.cshtml";
 }
 
-@using (Html.BeginForm("CropCau", "Home", FormMethod.Post, new { @id = "formDetail", @class = "coords form-inline form-horizontal form-bordered form-row-stripped", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CropCau", "Home", FormMethod.Post, new { @id = "formDetail", @class = "coords form-inline form-horizontal form-bordered form-row-stripped", @enctype = "multipart/form-data" , @alt="MucCau"}))
 {
 
     <input value="@ViewBag.idImage" type="hidden" id="idImage" name="idImage" />

@@ -18,7 +18,7 @@ namespace CropImage.Models
         public DbSet<Image> Images { get; set; }
         public DbSet<ImageCroped> ImageCropeds { get; set; }
         public DbSet<Training> Trainings { get; set; }
-
+        public DbSet<Keys> Key { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
            // modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

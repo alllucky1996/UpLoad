@@ -21,12 +21,12 @@
                             <div class="row">
 
                                 <div class="col-md-7 col-sm-12 responsive-1024">
-                                    <h4> khoanh vùng hình ảnh và điền mô tả cho hình ảnh</h4>
+                                    <h4> Khoanh vùng hình ảnh và điền mô tả cho hình ảnh</h4>
                                     
                                     <h3 class="text-danger">@ViewBag.Error</h3>
                                     <div id="imgCrop">
                                         @*<img src="@ViewBag.Image" id="demo2" alt="Jcrop Example" data-object-id="@ViewBag.idImage" class="img-responsive " />*@
-                                        <img src="@ViewBag.Image" id="demo2" alt="Main image" data-object-id="@ViewBag.idImage" class=" " style="width:@ViewBag.widthImage; height:@ViewBag.heightImage" />
+                                        <img src="@ViewBag.Image" id="demo2" alt="Main image" data-object-id="@ViewBag.idImage" class=" " style="width:@(ViewBag.widthImage==0?"":ViewBag.widthImage); height:@(ViewBag.heightImage==0?"":ViewBag.heightImage)" />
                                     </div>
                                     <div class="form-actions margin-top-30">
                                         <div class="row">
@@ -97,15 +97,23 @@
                 e.preventDefault();
                 var $form = $("#formDetail"),
                     url = $form.attr('action'),
-                    data = $("#formDetail").serialize();
+                    data = $("#formDetail").serialize(),
+                    description = $form.attr('alt');
                 $.ajax({
                     type: 'POST',
                     url: url,
                     data: data,
                     success: function (msg) {
                         if (msg.Isok) {
-                            var att = msg.Data;
-                            $('#dimgPreview').attr('src', att);
+                           
+                            if ((description === "MucCau") || (description === "MucTu" && msg.Data !== null)) {
+                                var att = msg.Data;
+                                $('#dimgPreview').attr('src', att);
+                            }
+                            //if (description === "MucTu" && daAm.length>1) {
+                            //    var att = msg.Data;
+                            //    $('#dimgPreview').attr('src', att);
+                            //}
                             showSuccess('Ghi nhận thành công');
                         }
                         else {
@@ -171,6 +179,8 @@
                     url: '/Home/Cau',
                     success: function (msg) {
                         $("#tabCau").html(msg);
+                        var idimg = $('#demo2').attr("data-object-id");
+                        $('#idImage').val(idimg);
                     },
                     error: function (data) {
                         alert('Đã sảy ra lỗi trong quá trình xử lý');
@@ -183,6 +193,8 @@
                     url: '/Home/Tu',
                     success: function (msg) {
                         $("#tabCau").html(msg);
+                        var idimg = $('#demo2').attr("data-object-id");
+                        $('#idImage').val(idimg);
                     },
                     error: function (data) {
                         alert('Đã sảy ra lỗi trong quá trình xử lý');
@@ -195,6 +207,8 @@
                     url: '/Home/AmTiet',
                     success: function (msg) {
                         $("#tabCau").html(msg);
+                        var idimg = $('#demo2').attr("data-object-id");
+                        $('#idImage').val(idimg);
                     },
                     error: function (data) {
                         alert('Đã sảy ra lỗi trong quá trình xử lý');
@@ -207,6 +221,8 @@
                     url: '/Home/Chu',
                     success: function (msg) {
                         $("#tabCau").html(msg);
+                        var idimg = $('#demo2').attr("data-object-id");
+                        $('#idImage').val(idimg);
                     },
                     error: function (data) {
                         alert('Đã sảy ra lỗi trong quá trình xử lý');
