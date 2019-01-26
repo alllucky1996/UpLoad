@@ -11,6 +11,7 @@ namespace CropImage.Models
     {
         [Key]
         public long Id { get; set; }
+        [Display(Name = "Crop từ hình ảnh")]
         public long? ImageId { get; set; }
         [ForeignKey("ImageId")]
         public virtual Image Image { get; set; }
@@ -29,11 +30,28 @@ namespace CropImage.Models
        
         [Required(ErrorMessage = "Không được để trống")]
         public string Lable { get; set; }
-        public bool? IsDauCau { get; set; }
+        public int? IdDau { get; set; }
+        [ForeignKey("IdDau")]
+        public virtual Dau Dau { get; set; }
         [Display(Name = "Mẫu này đúng hay sai")]
         public bool IsOK { get; set; }
         public DateTime CreateDate { get; set; }
+        [Display(Name = "Đường dẫn đến file")]
+        public string Uri { get; set; }
+        [Display(Name = "Dòng số")]
+        public int Line { get; set; }
+        [Display(Name = "Vị trí số")]
+        public int Index { get; set; }
 
+        // chưa chạy
+        [NotMapped]
+        public string NameFile { get {
+                if (Image != null)
+                {
+
+                }
+                return "";
+            } }
         public ImageCroped()
         {
             CreateDate = DateTime.Now;

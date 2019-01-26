@@ -70,7 +70,8 @@ namespace CropImage.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
                         Guid idImage = Guid.NewGuid();
-                        string fileName = string.Format("{0}{1}", idImage.ToString().Replace("-", ""), Path.GetExtension(file.FileName));
+                        string fileName = string.Format("{0}{1}", idImage.ToString().Replace("-", ""), ".png");
+                        /*string fileName = string.Format("{0}{1}", idImage.ToString().Replace("-", ""), Path.GetExtension(file.FileName));*/
 
                         var path = Path.Combine(filePath, fileName);
                         file.SaveAs(path);
@@ -117,6 +118,10 @@ namespace CropImage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,code,Name,Description,Uri,TrangThai")] Image image)
         {
+            // chưa làm 
+
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(image).State = EntityState.Modified;
@@ -141,7 +146,10 @@ namespace CropImage.Controllers
             try
             {
                 db.Images.Remove(image);
+                
                 await db.SaveChangesAsync();
+                // remove file sau
+
                 //return RedirectToAction("Index");
                 return Json(new ExecuteResult() { Isok = true, Data = image.Name });
             }
@@ -152,13 +160,13 @@ namespace CropImage.Controllers
         }
         
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

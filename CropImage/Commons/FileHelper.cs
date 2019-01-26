@@ -61,6 +61,17 @@ namespace CropImage.Commons
             else filePath = folder + @"\" + fileName;
             CreateFile(filePath, text);
         }
+        public static async Task CreateFileAsync(string folder, string fileName, string text)
+        {
+            CreateFolderIfNotExist(folder);
+            string filePath = "";
+            if (folder.EndsWith(@"\")) filePath = folder + fileName;
+            else filePath = folder + @"\" + fileName;
+            using (StreamWriter sw = (File.Exists(filePath)) ? File.CreateText(filePath) : File.CreateText(filePath))
+            {
+                await sw.WriteAsync(text);
+            }
+        }
         public static string GetRunningPath()
         {
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

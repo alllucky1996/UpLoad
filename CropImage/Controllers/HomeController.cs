@@ -17,6 +17,14 @@ namespace CropImage.Controllers
 {
     public class HomeController : Controller
     {
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("Index", "CoreHome", new { area = "Public" });
+        }
+
+        #region old 
+
         private DataContext db = new DataContext();
         private string PreViewImage = "~/TempImage/";
         public int widthImage { get; set; }
@@ -24,13 +32,21 @@ namespace CropImage.Controllers
         #region get 
         void baseView()
         {
-            ViewBag.Image = "/Uploads/Images/Mau1.jpg";
+            var img = db.Images.FirstOrDefault();
+
+            ViewBag.Image = img.Uri == null ? "/Uploads/Images/Mau1.jpg" : img.Uri;
             ViewBag.idImage = 1;
             int h;
-           
-            ViewBag.widthImage = CropHelper.WidthImage(Server.MapPath("~/Uploads/Images/Mau1.jpg"), out h);
+            string link = img.Uri == null ? "~/Uploads/Images/Mau1.jpg" : "~" + img.Uri;
+            ViewBag.widthImage = CropHelper.WidthImage(Server.MapPath(link), out h);
             ViewBag.heightImage = h;
             ViewBag.PreViewImage = "/TempImage/tempImages.jpg";
+            #region drop
+            var listDau = db.Daus;
+            ViewBag.IdDau = new SelectList(listDau, "Code", "Name");
+            var listLoaiTu = db.LoaiTus;
+            ViewBag.IdLoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            #endregion
         }
         void baseView(Image img)
         {
@@ -39,19 +55,20 @@ namespace CropImage.Controllers
             int h;
             ViewBag.widthImage = CropHelper.WidthImage(Server.MapPath("~" + img.Uri), out h);
             ViewBag.heightImage = h;
-        }
-
-        public ActionResult Index()
-        {
-            baseView();
             #region drop
             var listDau = db.Daus;
-            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            ViewBag.IdDau = new SelectList(listDau, "Code", "Name");
             var listLoaiTu = db.LoaiTus;
-            ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            ViewBag.IdLoaiTu = new SelectList(listLoaiTu, "Code", "Name");
             #endregion
-            return View();
         }
+
+        //public ActionResult Index()
+        //{
+        //    baseView();
+
+        //    return View();
+        //}
         public async Task<ActionResult> Pre(long id)
         {
             Image img = null;
@@ -122,9 +139,9 @@ namespace CropImage.Controllers
             // baseView();
             #region drop
             var listDau = db.Daus;
-            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            ViewBag.IdDau = new SelectList(listDau, "Code", "Name");
             var listLoaiTu = db.LoaiTus;
-            ViewBag.LoaiTu = new SelectList(listLoaiTu, "Code", "Name");
+            ViewBag.IdLoaiTu = new SelectList(listLoaiTu, "Code", "Name");
             #endregion
             return PartialView();
         }
@@ -133,9 +150,9 @@ namespace CropImage.Controllers
             //  baseView();
             #region drop
             var listDau = db.Daus;
-            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            ViewBag.IdDau = new SelectList(listDau, "Code", "Name");
             var listTuLoai = db.LoaiTus;
-            ViewBag.TuLoai = new SelectList(listTuLoai, "Code", "Name");
+            ViewBag.IdTuLoai = new SelectList(listTuLoai, "Code", "Name");
             #endregion
             return PartialView();
         }
@@ -144,7 +161,7 @@ namespace CropImage.Controllers
             // baseView();
             #region drop
             var listDau = db.Daus;
-            ViewBag.Dau = new SelectList(listDau, "Code", "Name");
+            ViewBag.IdDau = new SelectList(listDau, "Code", "Name");
             #endregion
             return PartialView();
         }
@@ -236,7 +253,6 @@ namespace CropImage.Controllers
             return Json(new ExecuteResult() { Isok = false, Data = "", Message = "Hãy nhập đủ thông tin" });
 
         }
-
         [HttpPost]
         public async Task<ActionResult> CropAmTiet(ImageCroped model, long idImage)
         {
@@ -265,12 +281,17 @@ namespace CropImage.Controllers
             return Json(new ExecuteResult() { Isok = false, Data = null, Message = "Hãy nhập đủ thông tin" });
 
         }
-
         [HttpPost]
         public async Task<ActionResult> CropChuOrDau(ImageCroped model, long idImage)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (model.IdDau != null)
+                {
+                    model.Description = model.Lable;
+                    var l = await db.Daus.FindAsync(model.IdDau);
+                    model.Lable = l.Name;
+                }
                 if (model.Lable.Split(' ').Count() > 1)
                 {
                     // goto Tu??0
@@ -280,6 +301,7 @@ namespace CropImage.Controllers
                 {
                     var croped = new ImageCroped();
                     croped = model;
+
                     croped.ImageId = idImage;
                     db.ImageCropeds.Add(croped);
                     await db.SaveChangesAsync();
@@ -290,7 +312,12 @@ namespace CropImage.Controllers
                     return Json(new ExecuteResult() { Isok = false, Data = null, Message = ex.Message });
                 }
             }
-            return Json(new ExecuteResult() { Isok = false, Data = null, Message = "Hãy nhập đủ thông tin" });
+            catch (Exception ex)
+            {
+                return Json(new ExecuteResult() { Isok = false, Data = null, Message = ex.Message });
+            }
+
+
 
         }
 
@@ -301,57 +328,7 @@ namespace CropImage.Controllers
 
         #endregion
 
+        #endregion
 
-
-
-
-
-
-        // ghi từ db vào file nhãn 
-        public ActionResult WriteFile(string key)
-        {
-            //format: a01-000u-00-00| ok| 154| 408 768 27 51| AT| A
-            // get key
-           
-            string keyEn = Commons.StringHelper.stringToSHA512(key);
-            if (keyEn.Equals(db.Key.FirstOrDefault().Key))
-            {
-                try
-                {
-                    List<string> listFileName = new List<string>();
-                    List<string> listLable = new List<string>();
-                    // lấy list nhãn đã gán
-                    var listCroped = db.ImageCropeds.ToList();
-                    // lấy ra tên hình ảnh
-                    foreach (var crop in listCroped)
-                    {
-                        listFileName.Add(db.Images.Find(crop.ImageId).Uri);
-                        string nameImage = db.Images.Find(crop.ImageId).Name;
-                        // nhãn 
-                        listLable.Add(nameImage + " " + crop.Info);
-                    }
-
-                    string comment = "#NguyenAnhDung#";
-                    string temp = "/TrainingFile/";
-                    string word = "word.txt";
-                    string pathFile = Path.Combine(temp, word);
-                    string path = Server.MapPath("~" + pathFile);
-                    if (!System.IO.File.Exists(path))
-                    {
-                        FileHelper.CreateFile(path, comment);
-                    }
-                    foreach (var item in listLable)
-                    {
-                        FileHelper.AppenAllText(path, "\n" + item);
-                    }
-                    return Json(new ExecuteResult() { Isok = true, Data = "path", Message = "Is ok" }, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception ex)
-                {
-                    return Json(new ExecuteResult() { Isok = false, Data = null, Message = ex.Message });
-                }
-            }
-            return Json(new ExecuteResult() { Isok = false, Data = null, Message ="Key k đúng hoặc k có quyền ghi file" });
-        }
     }
 }

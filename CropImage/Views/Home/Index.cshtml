@@ -92,6 +92,7 @@
     <script>
 
         jQuery(document).ready(function () {
+            
             $(':input[type="submit"]').prop('disabled', false);
             $("#subMit").click(function (e) {
                 e.preventDefault();
@@ -229,8 +230,18 @@
                     },
                 });
             });
-           
-            
+
+            function changeD() {
+                $('#Dau').on('change',function (e) {
+                    var x = $('#Dau').val();
+                    if ($('#Dau').val() !== "undefined") {
+                        $("#dNhanChu").attr("class", "hidden");
+                    }
+                    else {
+                        $("#dNhanChu").attr("class", "");
+                    }
+                }); 
+            }
         });
     </script>
 }

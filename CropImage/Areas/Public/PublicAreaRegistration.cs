@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace CropImage.Areas.Management
+namespace CropImage.Areas.Public
 {
-    public class ManagementAreaRegistration : AreaRegistration 
+    public class PublicAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Management";
+                return "Public";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Management_default",
-                "Management/{controller}/{action}/{id}",
+                "Public_default",
+                "Public/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

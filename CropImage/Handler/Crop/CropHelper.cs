@@ -1,4 +1,5 @@
-﻿using Emgu.CV;
+﻿using CropImage.Commons;
+using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,7 @@ namespace CropImage.Handler.Crop
         {
             try
             {
+               
                 MainImage.Save(fileName);
                 return true;
             }
@@ -73,6 +75,21 @@ namespace CropImage.Handler.Crop
             catch (Exception ex)
             {
                 error = ex.Message;
+            }
+        }
+        public static bool CropAndSave(Image<Bgr, byte> img, Rectangle rectangle,out string fileName)
+        {
+            try
+            {
+                var image = Crop(img, rectangle);
+                bool x = Save(image, "");
+                fileName = "";
+                return true;
+            }
+            catch (Exception)
+            {
+                fileName = string.Empty;
+                return false;
             }
         }
     }

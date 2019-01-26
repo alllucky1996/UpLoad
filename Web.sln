@@ -23,8 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librany", "Librany", "{C529
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{59FBD3A8-528E-4C5C-81AA-6E89DF8F141D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageHelper", "ImageHelper\ImageHelper.csproj", "{9483A70F-4ABE-4635-9FBB-6F5D17D04DEA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,10 +53,6 @@ Global
 		{55C8FA9B-C5D3-4C1E-A73A-571F3D1A3BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C8FA9B-C5D3-4C1E-A73A-571F3D1A3BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C8FA9B-C5D3-4C1E-A73A-571F3D1A3BDC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9483A70F-4ABE-4635-9FBB-6F5D17D04DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9483A70F-4ABE-4635-9FBB-6F5D17D04DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9483A70F-4ABE-4635-9FBB-6F5D17D04DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9483A70F-4ABE-4635-9FBB-6F5D17D04DEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
